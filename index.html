@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>vers</title>
+  <meta name="description" content="vers — architecture studio. Walk through the work by material, pattern, colour or project.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/icons/logo.svg" type="image/svg+xml">
+</head>
+<body class="is-loading">
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <img src="assets/icons/logo.svg" alt="" width="217" height="56">
+  </div>
+  <a class="skip" href="#app">Skip to content</a>
+
+  <header class="menu" id="menu">
+    <div class="menu__bg" aria-hidden="true"></div>
+    <a class="menu__logo" href="#/" aria-label="vers — home">
+      <img src="assets/icons/logo.svg" alt="" width="217" height="56">
+    </a>
+    <nav class="menu__nav" aria-label="Primary">
+      <a href="#/projects" data-nav="projects">projects</a>
+      <a href="#/about" data-nav="about">about</a>
+      <a href="mailto:hello@vers.studio" data-nav="contact">contact</a>
+    </nav>
+  </header>
+
+  <main id="app" class="app" tabindex="-1"></main>
+
+  <div class="bar-wrap" id="bar-wrap">
+    <div class="bar" id="bar" role="group" aria-label="Show me more">
+      <div class="bar__bg" aria-hidden="true"></div>
+      <span class="bar__label">Show me more by</span>
+      <div class="dd" data-dd="by">
+        <button class="dd__btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="dd__value">[materials]</span>
+          <img class="dd__caret" src="assets/icons/arrow_drop_down.svg" alt="" width="24" height="24">
+        </button>
+        <ul class="dd__menu" role="listbox" aria-label="Show me more by"></ul>
+      </div>
+      <span class="bar__label">as</span>
+      <div class="dd" data-dd="as">
+        <button class="dd__btn" type="button" aria-haspopup="listbox" aria-expanded="false">
+          <span class="dd__value">[room]</span>
+          <img class="dd__caret" src="assets/icons/arrow_drop_down.svg" alt="" width="24" height="24">
+        </button>
+        <ul class="dd__menu" role="listbox" aria-label="Show as"></ul>
+      </div>
+    </div>
+    <p class="hint" id="hint">
+      <img src="assets/icons/drag.svg" alt="" width="12" height="18">
+      <span>walk through space by click and drag</span>
+    </p>
+  </div>
+
+  <ul class="project-list" id="project-list" aria-label="Projects" hidden></ul>
+
+  <div class="overlay" id="overlay" hidden></div>
+
+  <div class="chip cursor-chip" id="cursor-chip" aria-hidden="true">
+    <img src="assets/icons/arrow_outward.svg" alt="" width="14" height="14">View Project
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
