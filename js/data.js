@@ -110,6 +110,21 @@ const ROOM = {
   ],
 };
 
+// Quotes and lines that are part of the studio's inspiration. They live in the room
+// as coloured tiles of real text, in the same perspective as the pictures.
+const QUOTE_PINK = '#E6849C'; // one pink for every quote tile
+const QUOTES = [
+  { text: 'The more one talks, the less the words mean.', bg: QUOTE_PINK, ink: '#FFFFFF' },
+  { text: 'A wall is a door that has not decided yet.', bg: QUOTE_PINK, ink: '#FFFFFF' },
+  { text: 'Build less. Look more.', bg: QUOTE_PINK, ink: '#FFFFFF' },
+  { text: 'Light is the cheapest material and the hardest to keep.', bg: QUOTE_PINK, ink: '#FFFFFF' },
+  { text: 'Every room remembers the hour it was drawn.', bg: QUOTE_PINK, ink: '#FFFFFF' },
+  { text: 'Nothing here is finished, only quiet.', bg: QUOTE_PINK, ink: '#FFFFFF' },
+];
+
+// Which room slots become quote tiles, per dimension (rotates so every room reads differently).
+const QUOTE_SLOTS = [['r35', 'r32'], ['r22', 'r28'], ['r26', 'r33']];
+
 const ABOUT = {
   title: 'About us',
   photo: 'assets/photos/about-team.jpg',

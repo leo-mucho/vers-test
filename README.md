@@ -38,6 +38,8 @@ work too if you have them.)
   travel continuously (it snaps to the nearest room when you stop). Rooms
   recycle behind the camera so the journey is endless; each shows a different
   set of pictures.
+- **Quotes**: a couple of slots in each room are coloured tiles carrying a line
+  from the studio's inspiration, set as real text (edit them in `js/data.js`).
 - **Room**: the camera turns to follow the cursor (CSS 3D look-around);
   click and drag to walk through the space (parallax by depth, with inertia);
   every panel is a picture; hover one to see its caption and click it to open

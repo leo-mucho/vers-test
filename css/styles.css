@@ -187,6 +187,21 @@ body.is-loading .menu, body.is-loading .bar-wrap { opacity: 0; }
   transition: filter var(--slow) var(--ease);
 }
 .panel--pic { cursor: pointer; }
+
+/* quote tiles: real text on a coloured face, projected like the pictures */
+.panel__quote {
+  position: absolute; left: 0; top: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+  backface-visibility: hidden;
+  display: flex; align-items: flex-start;
+  padding: 7% 8%;
+  font-family: "TT Hoves Pro", "TT Hoves", var(--sans);
+  font-weight: 700; font-size: var(--fs, 24px); line-height: 1.02; letter-spacing: -0.035em;
+  text-wrap: balance;
+  overflow: hidden;
+}
+.panel__quote p { margin: 0; }
 .panel--pic:hover + .panel__img, .panel--pic:focus-visible + .panel__img { filter: brightness(1.08); }
 
 .room__label {

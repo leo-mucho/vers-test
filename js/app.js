@@ -131,19 +131,26 @@ function homography(w, h, q) {
 
 function renderRoom() {
   const layer = (k) => ROOM.panels.map((p, i) => {
+    const slots = QUOTE_SLOTS[k % QUOTE_SLOTS.length];
+    const qi = slots.indexOf(p.id);
+    const quote = qi >= 0 ? QUOTES[(k * slots.length + qi) % QUOTES.length] : null;
     // each dimension rotates the picture assignment so every room shows different work
-    const pic = p.pic ? PICTURES[(PICTURES.findIndex((x) => x.id === p.pic) + k * 4) % PICTURES.length] : null;
+    const pic = !quote && p.pic ? PICTURES[(PICTURES.findIndex((x) => x.id === p.pic) + k * 4) % PICTURES.length] : null;
     // Intro: tiles start close to the camera, pushed outward from the centre, and fly into place.
     const cx = p.x + p.w / 2 - ROOM.width / 2, cy = p.y + p.h / 2 - ROOM.height / 2;
     const fx = (cx * 0.55).toFixed(0), fy = (cy * 0.55).toFixed(0);
     const delay = ((i * 37) % 420 + (1 - p.depth) * 500).toFixed(0);
-    const m = pic ? homography(p.w, p.h, quadPoints(p.d)) : '';
+    const m = homography(p.w, p.h, quadPoints(p.d));
+    const face = quote
+      ? `<div class="panel__quote" style="width:${Math.round(p.w)}px;height:${Math.round(p.h)}px;transform:${m};background:${quote.bg};color:${quote.ink};--fs:${(Math.min(p.w, p.h) * 0.12).toFixed(1)}px"><p>${esc(quote.text)}</p></div>`
+      : pic ? `<img class="panel__img" src="${pic.src}" alt="" width="${Math.round(p.w)}" height="${Math.round(p.h)}" style="transform:${m}">` : '';
+    const kind = quote ? 'panel--quote' : pic ? 'panel--pic' : '';
     return `<div class="panel-wrap" data-project="${pic ? pic.project : ''}" style="left:${p.x}px;top:${p.y}px;width:${p.w}px;height:${p.h}px;--d:${(0.55 + 0.45 * p.depth).toFixed(2)};--z:${((p.depth - 0.5) * 260).toFixed(0)}px">
       <div class="panel-inner" style="--fx:${fx}px;--fy:${fy}px;--delay:${delay}ms">
-        <svg class="panel ${pic ? 'panel--pic' : ''}" data-pic="${pic ? pic.id : ''}" viewBox="0 0 ${p.w} ${p.h}" ${pic ? `role="button" tabindex="0" aria-label="${esc(pic.caption)}"` : 'aria-hidden="true"'}>
-          <path class="fill" d="${p.d}" fill="${p.fill}"/>
+        <svg class="panel ${kind}" data-pic="${pic ? pic.id : ''}" viewBox="0 0 ${p.w} ${p.h}" ${pic ? `role="button" tabindex="0" aria-label="${esc(pic.caption)}"` : 'aria-hidden="true"'}>
+          <path class="fill" d="${p.d}" fill="${quote ? quote.bg : p.fill}"/>
         </svg>
-        ${pic ? `<img class="panel__img" src="${pic.src}" alt="" width="${Math.round(p.w)}" height="${Math.round(p.h)}" style="transform:${m}">` : ''}
+        ${face}
       </div>
     </div>`;
   }).join('');
@@ -404,7 +411,7 @@ function initRoom(root) {
     const target = downTarget || e.target;
     const panel = target.closest('.panel--pic');
     if (panel) { go({ view: 'list', pic: panel.dataset.pic, by: state.by }); return; }
-    if (target.closest('.room__label')) return;
+    if (target.closest('.room__label, .panel--quote')) return;
     // white space: step forward into the next dimension
     travel(1);
   });
@@ -497,7 +504,7 @@ const projectList = $('#project-list');
 function applyProjectFocus() {
   const room = $('.room');
   if (!room) return;
-  $$('.panel-wrap', room).forEach((w) => w.classList.toggle('is-dim', !!(state.by === 'project' && state.project) && w.dataset.project !== state.project));
+  $$('.panel-wrap', room).forEach((w) => w.classList.toggle('is-dim', !!(state.by === 'project' && state.project) && !!w.dataset.project && w.dataset.project !== state.project));
 }
 
 function syncProjectList() {
